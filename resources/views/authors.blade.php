@@ -9,10 +9,10 @@
     <h1>Hello world!</h1>
     <p>Selamat datang di Toko BookSales</p>
 
-    @foreach ($authors as $item)
+    @foreach ($authors as $author)
         <ul>
-            <li>{{ $item['id']}}</li>
-            <li>{{ $item['name']}}</li>
+            <li>{{ $author['id']}}</li>
+            <li>{{ $author['name']}}</li>
         </ul>
     @endforeach
 

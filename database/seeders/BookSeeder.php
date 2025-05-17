@@ -12,19 +12,19 @@ class BookSeeder extends Seeder
      */
     public function run(): void
     {
-        Book::insert([
+        Book::create([
             ['title' => 'The Future World', 'author_id' => 1, 'price' => 120000]
         ]);
-        Book::insert([
+        Book::create([
             ['title' => 'Historic Times', 'author_id' => 2, 'price' => 95000]
         ]);
-        Book::insert([
+        Book::create([
             ['title' => 'Philosophy of Life', 'author_id' => 3, 'price' => 110000]
         ]);
-        Book::insert([
+        Book::create([
             ['title' => 'The Power of Positivity', 'author_id' => 4, 'price' => 85000]
         ]);
-        Book::insert([
+        Book::create([
             ['title' => 'Magic Tales', 'author_id' => 5, 'price' => 99000]
         ]);
     }

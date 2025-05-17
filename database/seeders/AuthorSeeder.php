@@ -13,19 +13,19 @@ class AuthorSeeder extends Seeder
      */
     public function run(): void
     {
-        Author::insert([
+        Author::create([
             ['name' => 'John Doe', 'bio' => 'Penulis fiksi ilmiah.']
             ]);
-        Author::insert([
+        Author::create([
             ['name' => 'Jane Smith', 'bio' => 'Penulis novel sejarah.']
             ]);
-        Author::insert([
+        Author::create([
             ['name' => 'Alice Johnson', 'bio' => 'Ahli filsafat dan penulis.']
             ]);
-        Author::insert([
+        Author::create([
             ['name' => 'Bob Williams', 'bio' => 'Penulis motivasi.']
             ]);
-        Author::insert([
+        Author::create([
             ['name' => 'Charlie Brown', 'bio' => 'Pengarang cerita anak.']
             ]);
         
