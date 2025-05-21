@@ -14,20 +14,28 @@ class AuthorSeeder extends Seeder
     public function run(): void
     {
         Author::create([
-            ['name' => 'John Doe', 'bio' => 'Penulis fiksi ilmiah.']
-            ]);
+            'name' => 'J.K. Rowling',
+            'bio' => 'Penulis terkenal dari seri Harry Potter.',
+        ]);
+
         Author::create([
-            ['name' => 'Jane Smith', 'bio' => 'Penulis novel sejarah.']
-            ]);
+            'name' => 'Tere Liye',
+            'bio' => 'Penulis populer dengan berbagai novel fiksi dan fantasi.',
+        ]);
+
         Author::create([
-            ['name' => 'Alice Johnson', 'bio' => 'Ahli filsafat dan penulis.']
-            ]);
+            'name' => 'Jostein Gaarder',
+            'bio' => 'Penulis Dunia Sophie, buku pengantar filsafat.',
+        ]);
+
         Author::create([
-            ['name' => 'Bob Williams', 'bio' => 'Penulis motivasi.']
-            ]);
+            'name' => 'Yuval Noah Harari',
+            'bio' => 'Sejarawan dan penulis buku Sapiens.',
+        ]);
+
         Author::create([
-            ['name' => 'Charlie Brown', 'bio' => 'Pengarang cerita anak.']
-            ]);
-        
+            'name' => 'J.R.R. Tolkien',
+            'bio' => 'Penulis legendaris dari The Hobbit dan The Lord of the Rings.',
+        ]);
     }
 }
