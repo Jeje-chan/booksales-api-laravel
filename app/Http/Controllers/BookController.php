@@ -71,7 +71,7 @@ class BookController extends Controller
         ]);
     }
 
-    
+
 
     public function update(Request $request, string $id){
         // mencari data
@@ -81,7 +81,7 @@ class BookController extends Controller
                 'success'=> false,
                 'message'=> 'Resource not Found'
                 ],404);
-            }       
+            }
         // validasi data
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max: 100',
@@ -92,6 +92,8 @@ class BookController extends Controller
             'genre_id'=> 'required|exists:genres,id',
             'author_id'=> 'required|exists:authors,id'
         ]);
+
+        
 
         if ($validator->fails()){
             return response()->json([
@@ -115,7 +117,7 @@ class BookController extends Controller
         if ($request->hasFile('cover_photo')){
             $image = $request->file('cover_photo');
             $image -> $image->store('books','public');
-            
+
             if ($book -> cover_photo) {
             Storage::disk('public')->delete('books/' . $book -> cover_photo);
             }

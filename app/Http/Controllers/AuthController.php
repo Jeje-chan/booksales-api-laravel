@@ -13,45 +13,43 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class AuthController extends Controller
 {
     public function register(Request $request)
-    // 1. setup validator
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|min:8',
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|min:8',
+        'role' => 'required|in:admin,customer', // tambahkan validasi role
+    ]);
 
-        // 2. check validation
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors(),
-            ], 422);
-        }
-
-        // 3. create user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
-
-        // 4. cek keberhasilan
-        if ($user) {
-            return response()->json([
-                'success' => true,
-                'message' => 'User registered successfully',
-                'data' => $user,
-            ], 200);
-        }
-
-        // 5. Jika gagal
+    if ($validator->fails()) {
         return response()->json([
             'success' => false,
-            'message' => 'User registration failed',
-        ], 409);
+            'message' => 'Validation failed',
+            'errors' => $validator->errors(),
+        ], 422);
     }
+
+    // Buat user dan simpan ke variabel $user
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => bcrypt($request->password),
+        'role' => $request->role,
+    ]);
+
+    if ($user) {
+        return response()->json([
+            'success' => true,
+            'message' => 'User registered successfully',
+            'data' => $user,
+        ], 200);
+    }
+
+    return response()->json([
+        'success' => false,
+        'message' => 'User registration failed',
+    ], 409);
+}
 
     public function login(Request $request){
     // 1. setup validator
@@ -72,26 +70,39 @@ class AuthController extends Controller
 
     // 4. cek isFailed
     if (!$token = JWTAuth::attempt($credentials)) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Invalid credentials',
-        ], 401);
-    }
-    // 5. cek isSuccess 
     return response()->json([
-        'success' => true,
-        'message' => 'Login successful',
-        'user' => auth()->guard('api')->user(),
-        'token'=> $token,
-        'data' => $token
-    ], 200);
+        'success' => false,
+        'message' => 'Invalid credentials',
+    ], 401);
+}
+
+// Ambil user yang sedang login
+$user = JWTAuth::user();
+
+return response()->json([
+    'token' => $token,
+    'user' => [
+        'id' => $user->id,
+        'name' => $user->name,
+        'email' => $user->email,
+        'role' => $user->role,
+    ]
+]);
+}
+ public function listUsers()
+    {
+        $users = User::all();
+        return response()->json([
+            'success' => true,
+            'users' => $users
+        ]);
     }
 
     public function logout()
 {
     try {
         $token = JWTAuth::getToken();
-        
+
         if (!$token) {
             return response()->json([
                 'success' => false,
